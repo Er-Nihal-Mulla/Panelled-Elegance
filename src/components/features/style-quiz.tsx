@@ -112,7 +112,7 @@ export function StyleQuiz() {
             <Button onClick={handleNext} disabled={!answers[currentStep.key]}>View Results</Button>
         )}
         {step === quizSteps.length && (
-            <Button asChild><a href="#contact">Get a Quote</a></Button>
+            <Button asChild><a href="#contact">Get In Touch</a></Button>
         )}
       </div>
     </Card>

@@ -25,7 +25,7 @@ export default function Home() {
                   <a href="#portfolio">View Our Work</a>
                 </Button>
                 <Button asChild variant="link" size="lg" className="text-secondary font-bold">
-                  <a href="#contact">Get a Quote &rarr;</a>
+                  <a href="#contact">Get In Touch &rarr;</a>
                 </Button>
               </div>
             </div>
