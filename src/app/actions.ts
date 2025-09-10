@@ -61,19 +61,16 @@ export async function submitInquiry(
       };
     }
     
-    // 2. If safe, add to Firestore (if configured)
+    // 2. Send SMS notification FIRST to ensure credentials are correct.
+    const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : 'No message provided.'}`;
+    await sendSms(smsMessage);
+    
+    // 3. If SMS is successful, add to Firestore (if configured)
     if(isFirebaseConfigured) {
       await addEnquiry({ name, email, message: message || '', phone });
     } else {
       console.log("Firebase not configured. Skipping database write.");
-      // Simulate a delay if Firebase isn't set up
-      await new Promise(resolve => setTimeout(resolve, 500));
     }
-    
-    // 3. Send SMS notification
-    const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : 'No message provided.'}`;
-    await sendSms(smsMessage);
-
 
     return {
       message: "Thank you for your inquiry! We'll be in touch soon.",
@@ -81,10 +78,10 @@ export async function submitInquiry(
     };
   } catch (error) {
     console.error('Error submitting inquiry:', error);
-    // Check if the error is from our explicit re-throw in sendSms
+    // This will now catch any error, but the most likely is from sendSms.
     if (error instanceof Error && error.message.includes('SMS')) {
         return {
-            message: "Your inquiry was received, but we failed to send an SMS notification. Please check SMS service configuration in your .env file.",
+            message: "Your inquiry could not be sent. Please check the SMS service configuration (e.g., Twilio credentials) in your .env file.",
             isSuccess: false,
         };
     }
