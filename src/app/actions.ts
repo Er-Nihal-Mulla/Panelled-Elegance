@@ -84,7 +84,7 @@ export async function submitInquiry(
     // Check if the error is from our explicit re-throw in sendSms
     if (error instanceof Error && error.message.includes('SMS')) {
         return {
-            message: "Your inquiry was received, but we failed to send an SMS notification. Please check SMS service configuration.",
+            message: "Your inquiry was received, but we failed to send an SMS notification. Please check SMS service configuration in your .env file.",
             isSuccess: false,
         };
     }
