@@ -59,9 +59,9 @@ export function ContactForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone" className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-primary" /> Phone Number (Optional)
+                <Phone className="h-4 w-4 text-primary" /> Phone Number
             </Label>
-            <Input id="phone" name="phone" type="tel" placeholder="Your phone number" />
+            <Input id="phone" name="phone" type="tel" placeholder="Your phone number" required />
             {state.errors?.phone && <p className="text-sm text-destructive">{state.errors.phone[0]}</p>}
           </div>
           <div className="space-y-2">

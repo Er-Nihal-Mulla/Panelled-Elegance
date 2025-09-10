@@ -13,7 +13,7 @@ const contactSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email.' }),
   message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
-  phone: z.string().optional(),
+  phone: z.string().min(10, { message: 'Please enter a valid phone number.' }),
 });
 
 type ContactFormState = {
@@ -65,7 +65,7 @@ export async function submitInquiry(
     
     // 2. If safe, add to Firestore (if configured)
     if(isFirebaseConfigured) {
-      await addEnquiry({ name, email, message });
+      await addEnquiry({ name, email, message, phone });
     } else {
       // Simulate a delay if Firebase isn't set up
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -73,7 +73,7 @@ export async function submitInquiry(
     
     // 3. Send SMS notification
     try {
-        await sendSms(`New inquiry from ${name} (${email}): ${message}`);
+        await sendSms(`New inquiry from ${name} (${email}, ${phone}): ${message}`);
     } catch (smsError) {
         console.warn('SMS sending failed. The inquiry was saved, but the notification was not sent.', smsError);
         // We don't return an error to the user, as the main action (saving the inquiry) was successful.
