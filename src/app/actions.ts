@@ -79,9 +79,10 @@ export async function submitInquiry(
   } catch (error) {
     console.error('Error submitting inquiry:', error);
     // Catch ANY error from the try block and return a specific, actionable message.
-    // This is most likely due to Twilio credentials not being set.
+    // This will now include the detailed error from the SMS service.
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
     return {
-        message: "Your inquiry could not be sent. Please check the SMS service configuration (e.g., Twilio credentials) in your .env file.",
+        message: `Inquiry failed: ${errorMessage}. Please check service configurations.`,
         isSuccess: false,
     };
   }
