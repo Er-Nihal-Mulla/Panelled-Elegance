@@ -13,15 +13,15 @@ const isTwilioEnabled = accountSid && authToken && fromPhoneNumber && toPhoneNum
 const client = isTwilioEnabled ? Twilio(accountSid, authToken) : null;
 
 export async function sendSms(message: string): Promise<void> {
-  if (!client) {
-    console.log('Twilio is not configured. Skipping SMS.');
-    console.log(`SMS message that would have been sent to ${toPhoneNumber}: ${message}`);
-    return;
+  if (!client || !isTwilioEnabled) {
+    console.error('Twilio is not configured. Skipping SMS.');
+    // We throw an error to make sure the client-side is aware of the failure.
+    throw new Error('Twilio service is not configured. Please check environment variables.');
   }
   
   if (!toPhoneNumber) {
     console.warn('Owner phone number is not set. Skipping SMS.');
-    return;
+    throw new Error('Owner phone number (OWNER_PHONE_NUMBER) is not set in environment variables.');
   }
 
   try {
