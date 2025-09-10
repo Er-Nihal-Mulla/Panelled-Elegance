@@ -50,23 +50,11 @@ export async function submitInquiry(
   const isFirebaseConfigured = isFirebaseEnabled();
 
   try {
-    // 1. Send SMS notification FIRST. This is the most likely point of failure if not configured.
+    // 1. Send SMS notification. This is the primary action.
     const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : 'No message provided.'}`;
     await sendSms(smsMessage);
     
-    // 2. Sanitize the input using AI
-    const sanitizationResult = await sanitizeInquiry({ name, email, message: message || '' });
-
-    if (!sanitizationResult.isSafe) {
-      // If the AI flags the content, reject it.
-      // NOTE: The SMS was already sent. This is a trade-off for ensuring SMS delivery is attempted first.
-      return {
-        message: `Our AI security system flagged this message as potentially unsafe. Reason: ${sanitizationResult.reason}. Note: An initial SMS has already been sent.`,
-        isSuccess: false,
-      };
-    }
-    
-    // 3. If SMS is successful, add to Firestore (if configured)
+    // 2. If SMS is successful, add to Firestore (if configured)
     if(isFirebaseConfigured) {
       await addEnquiry({ name, email, message: message || '', phone });
     } else {
@@ -79,8 +67,7 @@ export async function submitInquiry(
     };
   } catch (error) {
     console.error('Error submitting inquiry:', error);
-    // Catch ANY error from the try block and return a specific, actionable message.
-    // This will now include the detailed error from the SMS service or Genkit.
+    // This will now only catch errors from sendSms or addEnquiry.
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
     return {
         message: `Inquiry failed: ${errorMessage}. Please check service configurations.`,
