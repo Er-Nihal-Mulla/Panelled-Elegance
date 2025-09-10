@@ -3,26 +3,26 @@
 
 import Twilio from 'twilio';
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const fromPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-const toPhoneNumber = process.env.OWNER_PHONE_NUMBER;
-
-const isTwilioEnabled = accountSid && authToken && fromPhoneNumber && toPhoneNumber;
-
-const client = isTwilioEnabled ? Twilio(accountSid, authToken) : null;
-
 export async function sendSms(message: string): Promise<void> {
-  if (!client || !isTwilioEnabled) {
-    console.error('Twilio is not configured. Skipping SMS.');
-    // We throw an error to make sure the client-side is aware of the failure.
-    throw new Error('Twilio service is not configured. Please check environment variables.');
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const fromPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+  const toPhoneNumber = process.env.OWNER_PHONE_NUMBER;
+
+  if (!accountSid) {
+    throw new Error('Twilio service is not configured: TWILIO_ACCOUNT_SID is missing from environment variables.');
   }
-  
+  if (!authToken) {
+    throw new Error('Twilio service is not configured: TWILIO_AUTH_TOKEN is missing from environment variables.');
+  }
+  if (!fromPhoneNumber) {
+    throw new Error('Twilio service is not configured: TWILIO_PHONE_NUMBER is missing from environment variables.');
+  }
   if (!toPhoneNumber) {
-    console.warn('Owner phone number is not set. Skipping SMS.');
-    throw new Error('Owner phone number (OWNER_PHONE_NUMBER) is not set in environment variables.');
+    throw new Error('Twilio service is not configured: OWNER_PHONE_NUMBER is missing from environment variables.');
   }
+
+  const client = Twilio(accountSid, authToken);
 
   try {
     await client.messages.create({
@@ -32,8 +32,11 @@ export async function sendSms(message: string): Promise<void> {
     });
     console.log('SMS sent successfully!');
   } catch (error) {
-    console.error('Failed to send SMS:', error);
-    // We re-throw the error so the calling function can be aware of the failure.
-    throw new Error('Failed to send SMS notification.');
+    console.error('Failed to send SMS via Twilio:', error);
+    // Re-throw the original error to be displayed on the client
+    if (error instanceof Error) {
+        throw new Error(`Failed to send SMS: ${error.message}`);
+    }
+    throw new Error('An unknown error occurred while sending the SMS.');
   }
 }
