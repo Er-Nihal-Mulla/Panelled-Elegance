@@ -47,16 +47,14 @@ export async function submitInquiry(
   }
 
   const { name, email, message, phone } = validatedFields.data;
+  const isFirebaseConfigured = isFirebaseEnabled();
 
   try {
-    const isFirebaseConfigured = isFirebaseEnabled();
-
     // 1. Sanitize the input using AI
     const sanitizationResult = await sanitizeInquiry({ name, email, message: message || '' });
 
     if (!sanitizationResult.isSafe) {
       // If the AI flags the content, reject it.
-      // In a real app, you might also log this attempt for security monitoring.
       return {
         message: `Our AI security system flagged this message as potentially unsafe. Reason: ${sanitizationResult.reason}`,
         isSuccess: false,
@@ -67,23 +65,14 @@ export async function submitInquiry(
     if(isFirebaseConfigured) {
       await addEnquiry({ name, email, message: message || '', phone });
     } else {
+      console.log("Firebase not configured. Skipping database write.");
       // Simulate a delay if Firebase isn't set up
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
     
     // 3. Send SMS notification
-    try {
-        const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : ''}`;
-        await sendSms(smsMessage);
-    } catch (smsError) {
-        console.warn('SMS sending failed. The inquiry was saved, but the notification was not sent.', smsError);
-        // We don't return an error to the user, as the main action (saving the inquiry) was successful.
-        // If sending SMS is critical, you might want to return an error here.
-        return {
-          message: 'Your inquiry was received, but we failed to send a notification. Please contact us directly if you don\'t hear back soon.',
-          isSuccess: false,
-        };
-    }
+    const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : 'No message provided.'}`;
+    await sendSms(smsMessage);
 
 
     return {
@@ -92,6 +81,13 @@ export async function submitInquiry(
     };
   } catch (error) {
     console.error('Error submitting inquiry:', error);
+    // Check if the error is from our explicit re-throw in sendSms
+    if (error instanceof Error && error.message.includes('SMS')) {
+        return {
+            message: "Your inquiry was received, but we failed to send an SMS notification. Please check SMS service configuration.",
+            isSuccess: false,
+        };
+    }
     return {
       message: 'An unexpected error occurred. Please try again later.',
       isSuccess: false,
