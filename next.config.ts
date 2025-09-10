@@ -30,6 +30,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  devIndicators: {
+    buildActivity: false,
+    buildActivityPosition: 'bottom-right',
+  },
+  experimental: {
+    allowedDevOrigins: ['*'],
+  }
 };
 
 export default nextConfig;
