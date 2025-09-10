@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { generateIdeas } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -20,7 +21,7 @@ function SubmitButton() {
 
 export function IdeaGenerator() {
   const initialState = {};
-  const [state, dispatch] = useFormState(generateIdeas, initialState);
+  const [state, dispatch] = useActionState(generateIdeas, initialState);
 
   return (
     <div className="max-w-4xl mx-auto mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
