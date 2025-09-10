@@ -12,6 +12,9 @@ export function Header() {
                 <Link href="#portfolio" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
                     Portfolio
                 </Link>
+                <Link href="#services" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
+                    Services
+                </Link>
                 <Link href="#quiz" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
                     Quiz
                 </Link>
