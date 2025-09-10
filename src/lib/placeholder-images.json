@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "Modern Slat Wall",
+      "description": "Oak slat wood paneling brings warmth and texture to this contemporary living room, featuring integrated ambient lighting.",
+      "imageUrl": "https://picsum.photos/seed/luxurypanel1/800/600",
+      "imageHint": "modern living room"
+    },
+    {
+      "id": "project-2",
+      "title": "Classic Wainscoting",
+      "description": "Elegant and timeless wainscoting adds a touch of classic sophistication to this formal dining area.",
+      "imageUrl": "https://picsum.photos/seed/classicpanel2/800/600",
+      "imageHint": "classic dining"
+    },
+    {
+      "id": "project-3",
+      "title": "Geometric Bedroom Accent",
+      "description": "A bespoke geometric panel accent wall creates a stunning focal point in this serene master bedroom.",
+      "imageUrl": "https://picsum.photos/seed/geopanel3/800/600",
+      "imageHint": "geometric bedroom"
+    },
+    {
+      "id": "project-4",
+      "title": "Board & Batten Hallway",
+      "description": "Crisp board and batten paneling elevates this entryway, adding character and architectural interest.",
+      "imageUrl": "https://picsum.photos/seed/boardbatten4/800/600",
+      "imageHint": "entryway design"
+    },
+    {
+      "id": "project-5",
+      "title": "3D Office Feature",
+      "description": "A dynamic 3D wall panel installation adds a modern, creative flair to this home office space.",
+      "imageUrl": "https://picsum.photos/seed/3dpanel5/800/600",
+      "imageHint": "modern office"
+    },
+    {
+      "id": "project-6",
+      "title": "Rustic Shiplap Charm",
+      "description": "Horizontal shiplap paneling provides a cozy, rustic charm in this inviting family room.",
+      "imageUrl": "https://picsum.photos/seed/shiplappanel6/800/600",
+      "imageHint": "rustic family room"
+    }
+  ]
 }
