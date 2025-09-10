@@ -2,7 +2,6 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ProjectShowcase } from "@/components/features/project-showcase";
 import { StyleQuiz } from "@/components/features/style-quiz";
-import { IdeaGenerator } from "@/components/features/idea-generator";
 import { ContactForm } from "@/components/features/contact-form";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -55,18 +54,6 @@ export default function Home() {
           </div>
         </section>
 
-        <Separator className="my-16 w-1/2 mx-auto" />
-
-        <section id="ai-generator" className="w-full py-16 md:py-24">
-            <div className="container mx-auto px-4 md:px-6">
-                <h2 className="text-3xl font-headline font-bold tracking-tight text-center sm:text-4xl text-primary">AI-Powered Inspiration</h2>
-                <p className="mt-4 text-center text-lg text-foreground/80 max-w-2xl mx-auto">
-                    Use our generative AI tool to brainstorm unique paneling ideas tailored to your room, style, and budget.
-                </p>
-                <IdeaGenerator />
-            </div>
-        </section>
-        
         <Separator className="my-16 w-1/2 mx-auto" />
 
         <section id="contact" className="w-full py-16 md:py-24 bg-card/50">

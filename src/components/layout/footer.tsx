@@ -14,9 +14,6 @@ export function Footer() {
                         <Link href="#quiz" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
                             Style Quiz
                         </Link>
-                        <Link href="#ai-generator" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
-                            AI Ideas
-                        </Link>
                         <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4 text-foreground/80">
                             Contact
                         </Link>
