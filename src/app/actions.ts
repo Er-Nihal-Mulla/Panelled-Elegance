@@ -61,7 +61,7 @@ export async function submitInquiry(
       };
     }
     
-    // 2. Send SMS notification FIRST to ensure credentials are correct.
+    // 2. Send SMS notification FIRST. This is the most likely point of failure if not configured.
     const smsMessage = `New inquiry from ${name} (${email}, ${phone}): ${message ? message.substring(0, 300) : 'No message provided.'}`;
     await sendSms(smsMessage);
     
@@ -78,16 +78,11 @@ export async function submitInquiry(
     };
   } catch (error) {
     console.error('Error submitting inquiry:', error);
-    // This will now catch any error, but the most likely is from sendSms.
-    if (error instanceof Error && error.message.includes('SMS')) {
-        return {
-            message: "Your inquiry could not be sent. Please check the SMS service configuration (e.g., Twilio credentials) in your .env file.",
-            isSuccess: false,
-        };
-    }
+    // Catch ANY error from the try block and return a specific, actionable message.
+    // This is most likely due to Twilio credentials not being set.
     return {
-      message: 'An unexpected error occurred. Please try again later.',
-      isSuccess: false,
+        message: "Your inquiry could not be sent. Please check the SMS service configuration (e.g., Twilio credentials) in your .env file.",
+        isSuccess: false,
     };
   }
 }
