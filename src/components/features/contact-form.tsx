@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { submitInquiry } from '@/app/actions';
-import { Mail, MessageSquare, User, Loader2 } from 'lucide-react';
+import { Mail, MessageSquare, User, Loader2, Phone } from 'lucide-react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -56,6 +56,13 @@ export function ContactForm() {
             </Label>
             <Input id="email" name="email" type="email" placeholder="your@email.com" required />
             {state.errors?.email && <p className="text-sm text-destructive">{state.errors.email[0]}</p>}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone" className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-primary" /> Phone Number (Optional)
+            </Label>
+            <Input id="phone" name="phone" type="tel" placeholder="Your phone number" />
+            {state.errors?.phone && <p className="text-sm text-destructive">{state.errors.phone[0]}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="message" className="flex items-center gap-2">
