@@ -18,8 +18,8 @@ export default function Home() {
            <Image
             src="/logo.png"
             alt="B4 - The Panelling Experts Logo"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{objectFit: "cover"}}
             className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
             priority
           />
