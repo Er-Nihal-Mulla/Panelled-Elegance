@@ -7,14 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Layers3, PanelRight, Fence, Boxes } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <section id="hero" className="w-full py-20 md:py-32 lg:py-40 bg-card/50">
-          <div className="container mx-auto px-4 md:px-6 text-center">
+        <section id="hero" className="relative w-full overflow-hidden py-20 md:py-32 lg:py-40 bg-card/50">
+           <Image
+            src="/logo.png"
+            alt="B4 - The Panelling Experts Logo"
+            layout="fill"
+            objectFit="cover"
+            className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
+            priority
+          />
+          <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
               <h1 className="text-4xl font-headline font-bold tracking-tight text-primary sm:text-5xl md:text-6xl lg:text-7xl">
                 Panelled Elegance, Expertly Crafted
