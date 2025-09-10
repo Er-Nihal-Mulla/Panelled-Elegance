@@ -66,9 +66,9 @@ export function ContactForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="message" className="flex items-center gap-2">
-                <MessageSquare className="h-4 w-4 text-primary" /> Message
+                <MessageSquare className="h-4 w-4 text-primary" /> Message (Optional)
             </Label>
-            <Textarea id="message" name="message" placeholder="Tell us about your project..." required minLength={10} rows={5} />
+            <Textarea id="message" name="message" placeholder="Tell us about your project..." rows={5} />
             {state.errors?.message && <p className="text-sm text-destructive">{state.errors.message[0]}</p>}
           </div>
           <SubmitButton />
