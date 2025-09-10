@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Layers3, PanelRight, Fence, Boxes } from "lucide-react";
 import Image from "next/image";
+import B4Logo from '../assets/b4logo.jpeg'
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
       <main className="flex-1">
         <section id="hero" className="relative w-full overflow-hidden py-20 md:py-32 lg:py-40 bg-card/50">
            <Image
-            src="/logo.png"
+            src={B4Logo}
             alt="B4 - The Panelling Experts Logo"
             fill
             style={{objectFit: "cover"}}
